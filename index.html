@@ -66,23 +66,98 @@
         #menu a.active:hover {
             background: #3074a4;
         }
+
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: white;
+            padding: 10px;
+        }
     </style>
 
+    <div id="info"></div>
     <nav id="menu"></nav>
     <div id="map"></div>
 
     <script>
+        const sources = ['se-can-sub-boat', "se-ca-pro-boat", "secanada_facility-3csvgi"]
+        const allowedLayers = [
+            '09_12_TotalIncident_Sub',
+            '13_17_TotalIncident_Sub',
+            'Percentage_ChangeBetween_09-12_and_13-17_Sub',
+            'se_ax_6_SITE',
+            'se-can-sub-boat',
+            'cp_label_SUB',
+        ]
+        const infoDiv = document.getElementById("info")
         mapboxgl.accessToken = 'pk.eyJ1IjoiYWN0aXZleGNoYW5nZS1jdXN0IiwiYSI6ImNrM292dnI2eDI1Z2MzaHBobWk4Z3Q2cnQifQ.Nx-qysX5Bjm33Zwux6H1dA';
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/activexchange-cust/cksrkx5rk2b8g17ue203kljrv',
             zoom: 3,
-            center: {lng: -100.50935750147184, lat: 54.49349903119207}
+            center: { lng: -100.50935750147184, lat: 54.49349903119207 }
         });
 
         // Wait until the map has finished loading.
         map.on('load', () => {
 
+
+            map.setPaintProperty('se-can-sub-boat', 'fill-outline-color', "black")
+            map.setPaintProperty('se-can-sub-boat', 'fill-color', "rgba(255, 255, 0, 0.1)")
+
+            map.on('click', e => {
+                console.log('123', e);
+
+                const features = map.queryRenderedFeatures(e.point);
+                // Limit the number of properties we're displaying for
+                // legibility and performance
+                const displayProperties = [
+                    // 'type',
+                    'properties',
+                    // 'id',
+                    // 'layer',
+                    // 'source',
+                    // 'sourceLayer',
+                    // 'state'
+                ];
+
+                const displayFeatures = features
+                    .filter(i => sources.includes(i.layer['source-layer']))
+                    .map((feat) => {
+                        const displayFeat = {};
+                        displayProperties.forEach((prop) => {
+                            displayFeat[prop] = feat[prop];
+                        });
+                        return displayFeat;
+                    });
+
+
+                // Write object as string with an indent of two spaces.
+
+                console.log('displayFeatures', displayFeatures);
+
+                if (displayFeatures.length > 0 && displayFeatures[0].properties) {
+                    let text = "";
+                    for (const [key, value] of Object.entries(displayFeatures[0].properties)) {
+                        text += `<div><b>${key}</b> : ${value}</div>`;
+                    }
+                    info.innerHTML = text;
+
+
+                    new mapboxgl.Popup()
+                        .setLngLat(e.lngLat)
+                        .setHTML(text)
+                        .addTo(map);
+                }
+
+
+
+                // const myFeatures = map.querySourceFeatures("composite", { sourceLayer: ['se-can-sub-boat'] })
+                // console.log('myFeatures', myFeatures);
+
+            })
 
         });
 
@@ -90,9 +165,10 @@
         map.once('idle', () => {
 
 
-            const sources = ['se-can-sub-boat', "se-ca-pro-boat", "secanada_facility-3csvgi"]
+
             const toggleableLayerIds = map.getStyle().layers
                 .filter(i => sources.includes(i['source-layer']))
+                .filter(i => allowedLayers.includes(i['id']))
                 .map(i => i.id)
 
             console.log('allLayers', toggleableLayerIds);
