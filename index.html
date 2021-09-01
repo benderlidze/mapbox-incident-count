@@ -145,7 +145,8 @@
                     });
 
 
-                const layerName = features.find(i => i.sourceLayer === 'se-can-sub-boat')
+                const layerName = features.find(i => i.layer.id === '09_12_TotalIncident_Sub' || i.layer.id === '13_17_TotalIncident_Sub')
+                console.log('features', features);
                 console.log('layerName', layerName);
 
 
