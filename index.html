@@ -75,6 +75,15 @@
             background-color: white;
             padding: 10px;
         }
+
+        .box {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .box>* {
+            flex: 1 1 160px;
+        }
     </style>
 
     <div id="info"></div>
@@ -136,24 +145,22 @@
 
                 // Write object as string with an indent of two spaces.
 
-                console.log('displayFeatures', displayFeatures);
+                console.log('displayFeatures', features );
 
                 if (displayFeatures.length > 0 && displayFeatures[0].properties) {
                     let text = "";
                     for (const [key, value] of Object.entries(displayFeatures[0].properties)) {
-                        text += `<div><b>${key}</b> : ${value}</div>`;
-                    }
-                    info.innerHTML = text;
 
+                        const name = key//.replace("13_17_", "").replace("09_12_", "").replace("09_12 _","")
+                        text += `<div><b>${name}</b> : ${value}</div>`;
+                    }  
+                    //info.innerHTML = `<div class="box">${text}</div>`;
 
                     new mapboxgl.Popup()
                         .setLngLat(e.lngLat)
                         .setHTML(text)
                         .addTo(map);
                 }
-
-
-
                 // const myFeatures = map.querySourceFeatures("composite", { sourceLayer: ['se-can-sub-boat'] })
                 // console.log('myFeatures', myFeatures);
 
