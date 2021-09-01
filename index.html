@@ -178,7 +178,7 @@
                     if (pref === '09_12_') {
                         text += `
                             Area Name: ${v['AREA_NAME']}<br>
-                            Total Incidents YY-YY:  ${v['09_12_TotalIncident']}<br>
+                            Total Incidents:  ${v['09_12_TotalIncident']}<br>
                             Number of Males:   ${v['09_12_MaleCount']}<br>
                             Number of Females:   ${v['09_12_FemaleCount']}<br>
                             Accompaniment (Alone):   ${v['09_12_Accompaniment_AloneOrNotWitness']}<br>
@@ -192,13 +192,13 @@
                             PFD (Improperly Worn):   ${v['09_12_PFDImproperlyWorn']}<br>
                             PDF (Not Worn):   ${v['09_12_PFDNotWorn']}<br>
                             Powered Vessel:   ${v['09_12_VesselTypePowered']}<br>
-                            Unpowered Vessel   ${v['09_12_VesselTypeNotPowered']}<br>
+                            Unpowered Vessel:   ${v['09_12_VesselTypeNotPowered']}<br>
                             `
                     }
                     if (pref === '13_17_') {
                         text += `
                             Area Name: ${v['AREA_NAME']}<br>
-                            Total Incidents YY-YY:  ${v['13_17_TotalIncident ']}<br>
+                            Total Incidents:  ${v['13_17_TotalIncident ']}<br>
                             Number of Males:   ${v['13_17_MaleCount']}<br>
                             Number of Females:   ${v['13_17_FemaleCount']}<br>
                             Accompaniment (Alone):   ${v['13_17_Accompaniment_AloneOrNotWitness']}<br>
@@ -211,9 +211,16 @@
                             PFD (Worn):   ${v['13_17_PFDWornProperly']}<br>
                             PFD (Improperly Worn):   ${v['13_17_PFDImproperlyWorn']}<br>
                             PDF (Not Worn):   ${v['13_17_PFDNotWorn']}<br>
-                            Powered Vessel   ${v['13_17_VesselType_Powered']}<br>
-                            Unpowered Vessel   ${v['13_17_VesselType_NotPowered']}<br>
+                            Powered Vessel:   ${v['13_17_VesselType_Powered']}<br>
+                            Unpowered Vessel:   ${v['13_17_VesselType_NotPowered']}<br>
                             `
+                    }
+
+
+                    //add Percentage_ChangeBetween_09-12_and_13-17 if selected
+                    if(map.getLayer("Percentage_ChangeBetween_09-12_and_13-17_Sub").visibility === "visible"){
+                        //Percentage_ChangeBetween_09-12_and_13-17
+                        text += `Percentage Change: ${v['Percentage_ChangeBetween_09-12_and_13-17']}<br>`;
                     }
 
                     new mapboxgl.Popup()
