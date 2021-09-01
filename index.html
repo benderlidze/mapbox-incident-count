@@ -218,9 +218,10 @@
 
 
                     //add Percentage_ChangeBetween_09-12_and_13-17 if selected
-                    if(map.getLayer("Percentage_ChangeBetween_09-12_and_13-17_Sub").visibility === "visible"){
+                    if (map.getLayer("Percentage_ChangeBetween_09-12_and_13-17_Sub").visibility === "visible") {
                         //Percentage_ChangeBetween_09-12_and_13-17
-                        text += `Percentage Change: ${v['Percentage_ChangeBetween_09-12_and_13-17']}<br>`;
+                        const p = (+v['Percentage_ChangeBetween_09-12_and_13-17'] * 100).toFixed()
+                        text += `Percentage Change: ${p}%<br>`;
                     }
 
                     new mapboxgl.Popup()
