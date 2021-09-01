@@ -31,7 +31,7 @@
             top: 10px;
             right: 10px;
             border-radius: 3px;
-            width: 220px;
+            width: 270px;
             border: 1px solid rgba(0, 0, 0, 0.4);
             font-family: 'Open Sans', sans-serif;
         }
@@ -109,6 +109,8 @@
             center: { lng: -100.50935750147184, lat: 54.49349903119207 }
         });
 
+        let popup;
+
         // Wait until the map has finished loading.
         map.on('load', () => {
 
@@ -116,9 +118,11 @@
             map.setPaintProperty('se-can-sub-boat', 'fill-outline-color', "black")
             map.setPaintProperty('se-can-sub-boat', 'fill-color', "rgba(255, 255, 0, 0.1)")
 
-            map.on('click', e => {
-                console.log('123', e);
+            map.on('mousemove', e => {
 
+                if (popup) {
+                    popup.remove()
+                }
 
                 const features = map.queryRenderedFeatures(e.point);
                 // Limit the number of properties we're displaying for
@@ -133,7 +137,7 @@
                     // 'state'
                 ];
 
-
+                console.log('features', features);
                 const displayFeatures = features
                     .filter(i => sources.includes(i.layer['source-layer']))
                     .map((feat) => {
@@ -145,9 +149,9 @@
                     });
 
 
-                const layerName = features.find(i => i.layer.id === '09_12_TotalIncident_Sub' || i.layer.id === '13_17_TotalIncident_Sub')
-                console.log('features', features);
-                console.log('layerName', layerName);
+                const layerName = features.find(i => i.layer.id === '09_12_TotalIncident_Sub' || i.layer.id === '13_17_TotalIncident_Sub' || i.layer.id === 'se_ax_6_SITE')
+                // console.log('features', features);
+                // console.log('layerName', layerName);
 
 
 
@@ -159,6 +163,7 @@
                         console.log('pref', pref);
                         if (pref === '09_12_TotalIncident_Sub') pref = '09_12_';
                         if (pref === '13_17_TotalIncident_Sub') pref = '13_17_';
+                        if (pref === 'se_ax_6_SITE') pref = 'se_ax_6_SITE';
                     }
 
                     let text = "";
@@ -174,7 +179,6 @@
                     //info.innerHTML = `<div class="box">${text}</div>`;
 
                     const v = displayFeatures[0].properties;
-                    console.log('v', v);
                     if (pref === '09_12_') {
                         text += `
                             Area Name: ${v['AREA_NAME']}<br>
@@ -215,6 +219,13 @@
                             Unpowered Vessel:   ${v['13_17_VesselType_NotPowered']}<br>
                             `
                     }
+                    if (pref === 'se_ax_6_SITE') {
+                        text += `
+                            Site name:   ${v['site_name']}<br>
+                            Se product name:   ${v['se_product']}<br>
+                            se_account:   ${v['se_account']}<br>
+                            `
+                    }
 
 
                     //add Percentage_ChangeBetween_09-12_and_13-17 if selected
@@ -224,11 +235,12 @@
                         text += `Percentage Change: ${p}%<br>`;
                     }
 
-                    new mapboxgl.Popup()
+                    popup = new mapboxgl.Popup()
                         .setLngLat(e.lngLat)
                         .setHTML(text)
                         .addTo(map);
                 }
+
                 // const myFeatures = map.querySourceFeatures("composite", { sourceLayer: ['se-can-sub-boat'] })
                 // console.log('myFeatures', myFeatures);
 
@@ -237,9 +249,17 @@
         });
 
         // After the last frame rendered before the map enters an "idle" state.
+
+        const menuLayers = [
+            { name: 'Total Incidents 2009 - 2012', layer: '09_12_TotalIncident_Sub' },
+            { name: 'Total Incidents 2013 - 2017', layer: '13_17_TotalIncident_Sub' },
+            { name: '% Change Between 09 - 12 and 13 - 17', layer: 'Percentage_ChangeBetween_09-12_and_13-17_Sub' },
+            { name: 'Incident Locations', layer: 'se_ax_6_SITE' },
+            { name: 'Area Boundaries(District)', layer: 'se-can-sub-boat' },
+            { name: 'Area Labels(District)', layer: 'cp_label_SUB' },
+        ]
+
         map.once('idle', () => {
-
-
 
             const toggleableLayerIds = map.getStyle().layers
                 .filter(i => sources.includes(i['source-layer']))
@@ -250,24 +270,24 @@
 
 
             // Set up the corresponding toggle button for each layer.
-            for (const id of toggleableLayerIds) {
+            for (const { name, layer } of menuLayers) {
                 // Skip layers that already have a button set up.
-                if (document.getElementById(id)) {
+                if (document.getElementById(layer)) {
                     continue;
                 }
 
-                console.log(id, map.getLayoutProperty(id, 'visibility'));
+                console.log(layer);
 
                 // Create a link.
                 const link = document.createElement('a');
-                link.id = id;
+                link.id = layer;
                 link.href = '#';
-                link.textContent = id;
+                link.textContent = name;
                 link.className = "";
 
                 // Show or hide layer when the toggle is clicked.
                 link.onclick = function (e) {
-                    const clickedLayer = this.textContent;
+                    const clickedLayer = this.id;
                     e.preventDefault();
                     e.stopPropagation();
 
