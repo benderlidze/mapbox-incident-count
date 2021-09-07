@@ -31,7 +31,7 @@
         type="text/css">
     <style>
         #menu {
-            background: #fff;
+            background: #522989;
             position: absolute;
             z-index: 1;
             top: 60px;
@@ -44,7 +44,7 @@
 
         #menu a {
             font-size: 13px;
-            color: #404040;
+            color: white;
             display: block;
             margin: 0;
             padding: 0;
@@ -60,17 +60,17 @@
         }
 
         #menu a:hover {
-            background-color: #f8f8f8;
-            color: #404040;
+            background-color: #69518a;
+            color: white;
         }
 
         #menu a.active {
-            background-color: #3887be;
+            background-color: #69518a;
             color: #ffffff;
         }
 
         #menu a.active:hover {
-            background: #3074a4;
+            background: #664c8b;
         }
 
         #info {
@@ -81,6 +81,7 @@
             /* background-color: white; */
             padding: 10px;
             font-size: large;
+            text-transform: uppercase;
         }
 
         .box {
@@ -91,11 +92,30 @@
         .box>* {
             flex: 1 1 160px;
         }
+
+        .logo {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        .powered{
+            position: absolute;
+            bottom: 90px;
+            right: 280px;
+        }
     </style>
 
     <div id="info">DPRC and Lifesaving Society Risk of Drowning (boating incidents)</div>
     <nav id="menu"></nav>
     <div id="map"></div>
+
+    <div class="powered">Powered by</div>
+    <div class="logo">
+        <img src="images/Life Saving CA.png" alt="" >
+        <img src="images/AX logo.png" alt="">
+    </div>
 
     <script>
         const sources = ['se-can-sub-boat', "se-ca-pro-boat", "secanada_facility-3csvgi"]
@@ -296,8 +316,8 @@
             { name: 'Total Incidents 2013 - 2017', layer: '13_17_TotalIncident_Sub' },
             { name: '% change between 2019/2012 and 2013/2017', layer: 'Percentage_ChangeBetween_09-12_and_13-17_Sub' },
             { name: 'Incident Locations', layer: 'se_ax_6_SITE' },
-            { name: 'Area Boundaries(District)', layer: 'se-can-sub-boat' },
-            { name: 'Area Labels(District)', layer: 'cp_label_SUB' },
+            { name: 'Area Boundaries (District)', layer: 'se-can-sub-boat' },
+            { name: 'Area Labels (District)', layer: 'cp_label_SUB' },
         ]
 
         map.once('idle', () => {
