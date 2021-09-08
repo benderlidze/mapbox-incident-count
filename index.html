@@ -102,10 +102,101 @@
             text-align: end;
         }
 
-        .powered{
+        .powered {
             position: absolute;
             bottom: 62px;
             right: 190px;
+        }
+
+
+
+        /* DROPDOWN PART */
+        .dropbtn {
+            background-color: #664c8b;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+
+        .dropbtn:hover,
+        .dropbtn:focus {
+            background-color: #664c8b;
+        }
+
+        .dropdown {
+            top: 10px;
+            right: 10px;
+            position: absolute;
+            display: inline-block;
+            z-index: 1000;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            /* min-width: 160px; */
+            min-width: 220px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            right: 0;
+            z-index: 1000;
+        }
+
+        .dropdown-content a.active {
+            background-color: #69518a;
+            color: #ffffff;
+        }
+
+        .dropdown-content a.active:hover {
+            background: #664c8b;
+        }
+
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block;
+        }
+
+        @media (min-width:921px) {
+            #myDropdown {
+                display: none;
+            }
+        }
+
+        @media (max-width:921px) {
+            #menu {
+                display: none;
+            }
+
+            #info {
+                top: 55px;
+                right: 10px;
+                margin-left: 40px;
+            }
+
+            .dropbtn {
+                display: inline;
+            }
+        }
+
+        @media (max-width:444px) {
+            .dropdown {
+                top: 130px;
+            }
         }
     </style>
 
@@ -113,13 +204,24 @@
     <nav id="menu"></nav>
     <div id="map"></div>
 
+
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">LAYERS</button>
+        <div id="myDropdown" class="dropdown-content">
+
+        </div>
+    </div>
+
+
     <div class="powered">Powered by</div>
     <div class="logo">
-        <img src="images/20210805-DPRC.jpg" alt="" style="width: 250px;" ><br>
+        <img src="images/20210805-DPRC.jpg" alt="" style="width: 250px;"><br>
         <img src="images/AX logo.png" alt="" style="width:250px;">
     </div>
 
     <script>
+
+        const myDropdown = document.getElementById("myDropdown");
         const sources = ['se-can-sub-boat', "se-ca-pro-boat", "secanada_facility-3csvgi"]
         const allowedLayers = [
             '09_12_TotalIncident_Sub',
@@ -173,8 +275,12 @@
 
             map.setPaintProperty('se-can-sub-boat', 'fill-outline-color', "black")
             map.setPaintProperty('se-can-sub-boat', 'fill-color', "rgba(255, 255, 0, 0.1)")
+            map.on('mousemove', layerDisplay)
+            map.on('click', layerDisplay)
 
-            map.on('mousemove', e => {
+
+            function layerDisplay(e) {
+
 
                 if (popup) {
                     popup.remove()
@@ -230,10 +336,10 @@
                     let text = "";
                     /*
                     for (const [key, value] of Object.entries(displayFeatures[0].properties)) {
-
+                
                         const name = key//.replace("13_17_", "").replace("09_12_", "").replace("09_12 _","")
                         if (pref && key.includes(pref)) { };
-
+                
                         text += `<div><b>${name}</b> : ${value}</div>`;
                     }
                     */
@@ -242,48 +348,48 @@
                     const v = displayFeatures[0].properties;
                     if (pref === '09_12_') {
                         text += `
-                            Area Name: ${v['AREA_NAME']}<br>
-                            Total Incidents:  ${v['09_12_TotalIncident']}<br>
-                            Number of Males:   ${v['09_12_MaleCount']}<br>
-                            Number of Females:   ${v['09_12_FemaleCount']}<br>
-                            Accompaniment (Alone):   ${v['09_12_Accompaniment_AloneOrNotWitness']}<br>
-                            Accompaniment (Adult):   ${v['09_12_Accompaniment_WithAdult']}<br>
-                            Accompaniment (Minor):   ${v['09_12_Accompaniment_WithMinorOnly']}<br>
-                            Accompaniment (Other):   ${v['09_12_Accompaniment_Other']}<br>
+            Area Name: ${v['AREA_NAME']}<br>
+            Total Incidents:  ${v['09_12_TotalIncident']}<br>
+            Number of Males:   ${v['09_12_MaleCount']}<br>
+            Number of Females:   ${v['09_12_FemaleCount']}<br>
+            Accompaniment (Alone):   ${v['09_12_Accompaniment_AloneOrNotWitness']}<br>
+            Accompaniment (Adult):   ${v['09_12_Accompaniment_WithAdult']}<br>
+            Accompaniment (Minor):   ${v['09_12_Accompaniment_WithMinorOnly']}<br>
+            Accompaniment (Other):   ${v['09_12_Accompaniment_Other']}<br>
 
-                            Alcohol Involved:   ${v['09_12_AlcoholReadingRecorded']}<br>
-                            Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
-                            PFD (Worn):   ${v['09_12_PFDWornProperly']}<br>
-                            PFD (Improperly Worn):   ${v['09_12_PFDImproperlyWorn']}<br>
-                            PDF (Not Worn):   ${v['09_12_PFDNotWorn']}<br>
-                            Powered Vessel:   ${v['09_12_VesselTypePowered']}<br>
-                            Unpowered Vessel:   ${v['09_12_VesselTypeNotPowered']}<br>
-                            `
+            Alcohol Involved:   ${v['09_12_AlcoholReadingRecorded']}<br>
+            Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
+            PFD (Worn):   ${v['09_12_PFDWornProperly']}<br>
+            PFD (Improperly Worn):   ${v['09_12_PFDImproperlyWorn']}<br>
+            PDF (Not Worn):   ${v['09_12_PFDNotWorn']}<br>
+            Powered Vessel:   ${v['09_12_VesselTypePowered']}<br>
+            Unpowered Vessel:   ${v['09_12_VesselTypeNotPowered']}<br>
+            `
                     }
                     if (pref === '13_17_') {
                         text += `
-                            Area Name: ${v['AREA_NAME']}<br>
-                            Total Incidents:  ${v['13_17_TotalIncident ']}<br>
-                            Number of Males:   ${v['13_17_MaleCount']}<br>
-                            Number of Females:   ${v['13_17_FemaleCount']}<br>
-                            Accompaniment (Alone):   ${v['13_17_Accompaniment_AloneOrNotWitness']}<br>
-                            Accompaniment (Adult):   ${v['13_17_Accompaniment_WithAdult']}<br>
-                            Accompaniment (Minor):   ${v['13_17_Accompaniment_WithMinorOnly']}<br>
-                            Accompaniment (Other):   ${v['13_17_Accompaniment_Other']}<br>
+            Area Name: ${v['AREA_NAME']}<br>
+            Total Incidents:  ${v['13_17_TotalIncident ']}<br>
+            Number of Males:   ${v['13_17_MaleCount']}<br>
+            Number of Females:   ${v['13_17_FemaleCount']}<br>
+            Accompaniment (Alone):   ${v['13_17_Accompaniment_AloneOrNotWitness']}<br>
+            Accompaniment (Adult):   ${v['13_17_Accompaniment_WithAdult']}<br>
+            Accompaniment (Minor):   ${v['13_17_Accompaniment_WithMinorOnly']}<br>
+            Accompaniment (Other):   ${v['13_17_Accompaniment_Other']}<br>
 
-                            Alcohol Involved:   ${v['13_17_AlcoholReadingRecorded']}<br>
-                            Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
-                            PFD (Worn):   ${v['13_17_PFDWornProperly']}<br>
-                            PFD (Improperly Worn):   ${v['13_17_PFDImproperlyWorn']}<br>
-                            PDF (Not Worn):   ${v['13_17_PFDNotWorn']}<br>
-                            Powered Vessel:   ${v['13_17_VesselType_Powered']}<br>
-                            Unpowered Vessel:   ${v['13_17_VesselType_NotPowered']}<br>
-                            `
+            Alcohol Involved:   ${v['13_17_AlcoholReadingRecorded']}<br>
+            Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
+            PFD (Worn):   ${v['13_17_PFDWornProperly']}<br>
+            PFD (Improperly Worn):   ${v['13_17_PFDImproperlyWorn']}<br>
+            PDF (Not Worn):   ${v['13_17_PFDNotWorn']}<br>
+            Powered Vessel:   ${v['13_17_VesselType_Powered']}<br>
+            Unpowered Vessel:   ${v['13_17_VesselType_NotPowered']}<br>
+            `
                     }
                     if (pref === 'se_ax_6_SITE') {
                         text += `
-                            Site name:   ${v['site_name']}<br>
-                            `
+            Site name:   ${v['site_name']}<br>
+            `
                         //Se product name:   ${v['se_product']}<br>
                         //se_account:   ${v['se_account']}<br>
                     }
@@ -303,11 +409,7 @@
                             .addTo(map);
                     }
                 }
-
-                // const myFeatures = map.querySourceFeatures("composite", { sourceLayer: ['se-can-sub-boat'] })
-                // console.log('myFeatures', myFeatures);
-
-            })
+            }
 
         });
 
@@ -332,14 +434,13 @@
             console.log('allLayers', toggleableLayerIds);
 
 
+            const layers = document.getElementById('menu');
             // Set up the corresponding toggle button for each layer.
             for (const { name, layer } of menuLayers) {
                 // Skip layers that already have a button set up.
                 if (document.getElementById(layer)) {
                     continue;
                 }
-
-                console.log(layer);
 
                 // Create a link.
                 const link = document.createElement('a');
@@ -353,12 +454,42 @@
                     const clickedLayer = this.id;
                     e.preventDefault();
                     e.stopPropagation();
-
                     const visibility = map.getLayoutProperty(
                         clickedLayer,
                         'visibility'
                     );
+                    // Toggle layer visibility by changing the layout object's visibility property.
+                    if (visibility === 'visible') {
+                        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                        this.className = '';
+                    } else {
+                        this.className = 'active';
+                        map.setLayoutProperty(
+                            clickedLayer,
+                            'visibility',
+                            'visible'
+                        );
+                    }
+                };
+                layers.appendChild(link);
 
+
+
+                const link1 = document.createElement('a');
+                link1.id = layer;
+                link1.href = '#';
+                link1.textContent = name;
+                link1.className = "";
+
+                // Show or hide layer when the toggle is clicked.
+                link1.onclick = function (e) {
+                    const clickedLayer = this.id;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const visibility = map.getLayoutProperty(
+                        clickedLayer,
+                        'visibility'
+                    );
                     // Toggle layer visibility by changing the layout object's visibility property.
                     if (visibility === 'visible') {
                         map.setLayoutProperty(clickedLayer, 'visibility', 'none');
@@ -373,10 +504,31 @@
                     }
                 };
 
-                const layers = document.getElementById('menu');
-                layers.appendChild(link);
+                myDropdown.appendChild(link1)
             }
+
+            //myDropdown.innerHTML = document.getElementById('menu').innerHTML;
         });
+
+
+
+        /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
     </script>
 
 </body>
