@@ -348,43 +348,50 @@
                     const v = displayFeatures[0].properties;
                     if (pref === '09_12_') {
                         text += `
-            Area Name: ${v['AREA_NAME']}<br>
-            Total Incidents:  ${v['09_12_TotalIncident']}<br>
-            Number of Males:   ${v['09_12_MaleCount']}<br>
-            Number of Females:   ${v['09_12_FemaleCount']}<br>
-            Accompaniment (Alone):   ${v['09_12_Accompaniment_AloneOrNotWitness']}<br>
-            Accompaniment (Adult):   ${v['09_12_Accompaniment_WithAdult']}<br>
-            Accompaniment (Minor):   ${v['09_12_Accompaniment_WithMinorOnly']}<br>
-            Accompaniment (Other):   ${v['09_12_Accompaniment_Other']}<br>
+                                    Area Name: ${v['AREA_NAME']}<br>
+                                    Total Incidents:  ${v['09_12_TotalIncident']}<br>
+                                    Number of Males:   ${v['09_12_MaleCount']}<br>
+                                    Number of Females:   ${v['09_12_FemaleCount']}<br>
+                                    Accompaniment (Alone):   ${v['09_12_Accompaniment_AloneOrNotWitness']}<br>
+                                    Accompaniment (Adult):   ${v['09_12_Accompaniment_WithAdult']}<br>
+                                    Accompaniment (Minor):   ${v['09_12_Accompaniment_WithMinorOnly']}<br>
+                                    Accompaniment (Other):   ${v['09_12_Accompaniment_Other']}<br>
 
-            Alcohol Involved:   ${v['09_12_AlcoholReadingRecorded']}<br>
-            Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
-            PFD (Worn):   ${v['09_12_PFDWornProperly']}<br>
-            PFD (Improperly Worn):   ${v['09_12_PFDImproperlyWorn']}<br>
-            PDF (Not Worn):   ${v['09_12_PFDNotWorn']}<br>
-            Powered Vessel:   ${v['09_12_VesselTypePowered']}<br>
-            Unpowered Vessel:   ${v['09_12_VesselTypeNotPowered']}<br>
-            `
+                                    Alcohol Involved:   ${v['09_12_AlcoholReadingRecorded']}<br>
+                                    Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
+                                    PFD (Worn):   ${v['09_12_PFDWornProperly']}<br>
+                                    PFD (Improperly Worn):   ${v['09_12_PFDImproperlyWorn']}<br>
+                                    PDF (Not Worn):   ${v['09_12_PFDNotWorn']}<br>
+                                    Powered Vessel:   ${v['09_12_VesselTypePowered']}<br>
+                                    Unpowered Vessel:   ${v['09_12_VesselTypeNotPowered']}<br>
+                                `
                     }
                     if (pref === '13_17_') {
                         text += `
-            Area Name: ${v['AREA_NAME']}<br>
-            Total Incidents:  ${v['13_17_TotalIncident ']}<br>
-            Number of Males:   ${v['13_17_MaleCount']}<br>
-            Number of Females:   ${v['13_17_FemaleCount']}<br>
-            Accompaniment (Alone):   ${v['13_17_Accompaniment_AloneOrNotWitness']}<br>
-            Accompaniment (Adult):   ${v['13_17_Accompaniment_WithAdult']}<br>
-            Accompaniment (Minor):   ${v['13_17_Accompaniment_WithMinorOnly']}<br>
-            Accompaniment (Other):   ${v['13_17_Accompaniment_Other']}<br>
+                                Area Name: ${v['AREA_NAME']}<br>
+                                Total Incidents:  ${v['13_17_TotalIncident ']}<br>
+                                Number of Males:   ${v['13_17_MaleCount']}<br>
+                                Number of Females:   ${v['13_17_FemaleCount']}<br>
+                                Accompaniment (Alone):   ${v['13_17_Accompaniment_AloneOrNotWitness']}<br>
+                                Accompaniment (Adult):   ${v['13_17_Accompaniment_WithAdult']}<br>
+                                Accompaniment (Minor):   ${v['13_17_Accompaniment_WithMinorOnly']}<br>
+                                Accompaniment (Other):   ${v['13_17_Accompaniment_Other']}<br>
 
-            Alcohol Involved:   ${v['13_17_AlcoholReadingRecorded']}<br>
-            Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
-            PFD (Worn):   ${v['13_17_PFDWornProperly']}<br>
-            PFD (Improperly Worn):   ${v['13_17_PFDImproperlyWorn']}<br>
-            PDF (Not Worn):   ${v['13_17_PFDNotWorn']}<br>
-            Powered Vessel:   ${v['13_17_VesselType_Powered']}<br>
-            Unpowered Vessel:   ${v['13_17_VesselType_NotPowered']}<br>
-            `
+                                Alcohol Involved:   ${v['13_17_AlcoholReadingRecorded']}<br>
+                                Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
+                                PFD (Worn):   ${v['13_17_PFDWornProperly']}<br>
+                                PFD (Improperly Worn):   ${v['13_17_PFDImproperlyWorn']}<br>
+                                PDF (Not Worn):   ${v['13_17_PFDNotWorn']}<br>
+                                Powered Vessel:   ${v['13_17_VesselType_Powered']}<br>
+                                Unpowered Vessel:   ${v['13_17_VesselType_NotPowered']}<br>
+                             `
+                    }
+
+                    if (v['13_17_TotalIncident '] && +v['13_17_TotalIncident '] < 5) {
+                        text = `Total Incidents:  ${v['13_17_TotalIncident ']}<br>due to privacy agreements no additional information may be provided`;
+                    }
+                    if (v['09_12_TotalIncident '] && +v['09_12_TotalIncident '] < 5) {
+                        text = `Total Incidents:  ${v['09_12_TotalIncident ']}<br>due to privacy agreements no additional information may be provided`;
                     }
 
                     if (pref === 'se_ax_6_SITE') {
