@@ -346,7 +346,26 @@
                     //info.innerHTML = `<div class="box">${text}</div>`;
 
                     const v = displayFeatures[0].properties;
+                    console.log('v', v);
                     if (pref === '09_12_') {
+                        const temp = [
+                            { suf: "", name: 'Area Name', val: 'AREA_NAME' },
+                            { suf: "", name: 'Total Incidents', val: '09_12_TotalIncident' },
+                            { suf: "%", name: 'Number of Males', val: '09_12_MaleCount' },
+                            { suf: "%", name: 'Number of Females', val: '09_12_FemaleCount' },
+                            { suf: "%", name: 'Accompaniment (Alone)', val: '09_12_Accompaniment_AloneOrNotWitness' },
+                            { suf: "%", name: 'Accompaniment (Adult)', val: '09_12_Accompaniment_WithAdult' },
+                            { suf: "%", name: 'Accompaniment (Minor)', val: '09_12_Accompaniment_WithMinorOnly' },
+                            { suf: "%", name: 'Accompaniment (Other)', val: '09_12_Accompaniment_Other' },
+                            { suf: "%", name: 'Alcohol Involved', val: '09_12_AlcoholReadingRecorded' },
+                            { suf: "%", name: 'Drug Involved', val: '09_12  _DrugsInvolved' },
+                            { suf: "%", name: 'PFD (Worn)', val: '09_12_PFDWornProperly' },
+                            { suf: "%", name: 'PFD (Improperly Worn)', val: '09_12_PFDImproperlyWorn' },
+                            { suf: "%", name: 'PDF (Not Worn)', val: '09_12_PFDNotWorn' },
+                            { suf: "%", name: 'Powered Vessel', val: '09_12_VesselTypePowered' },
+                            { suf: "%", name: 'Unpowered Vessel', val: '09_12_VesselTypeNotPowered' },
+                        ];
+                        /*
                         text += `
                                     Area Name: ${v['AREA_NAME']}<br>
                                     Total Incidents:  ${v['09_12_TotalIncident']}<br>
@@ -365,8 +384,32 @@
                                     Powered Vessel:   ${v['09_12_VesselTypePowered']}<br>
                                     Unpowered Vessel:   ${v['09_12_VesselTypeNotPowered']}<br>
                                 `
+                                */
+                        text += temp.filter(i => i.name === 'Area Name' || (Number(v[i.val]) && v[i.val] > 0)).map(i => `${i.name}: ${v[i.val]}${i.suf}`).join("<br>")
                     }
                     if (pref === '13_17_') {
+
+                        const temp = [
+                            {suf:"", name: 'Area Name', val: 'AREA_NAME' },
+                            {suf:"", name: 'Total Incidents', val: '13_17_TotalIncident ' },
+                            {suf:"%", name: 'Number of Males', val: '13_17_MaleCount' },
+                            {suf:"%", name: 'Number of Females', val: '13_17_FemaleCount' },
+                            {suf:"%", name: 'Accompaniment (Alone):', val: '13_17_Accompaniment_AloneOrNotWitness' },
+                            {suf:"%", name: 'Accompaniment (Adult):', val: '13_17_Accompaniment_WithAdult' },
+                            {suf:"%", name: 'Accompaniment (Minor):', val: '13_17_Accompaniment_WithMinorOnly' },
+                            {suf:"%", name: 'Accompaniment (Other):', val: '13_17_Accompaniment_Other' },
+                            {suf:"%", name: 'Alcohol Involved', val: '13_17_AlcoholReadingRecorded' },
+                            {suf:"%", name: 'Drug Involved', val: '9_12 _DrugsInvolved' },
+                            {suf:"%", name: 'PFD (Worn)', val: '13_17_PFDWornProperly' },
+                            {suf:"%", name: 'PFD (Improperly Worn)', val: '13_17_PFDImproperlyWorn' },
+                            {suf:"%", name: 'PDF (Not Worn)', val: '13_17_PFDNotWorn' },
+                            {suf:"%", name: 'Powered Vessel', val: '13_17_VesselType_Powered' },
+                            {suf:"%", name: 'Unpowered Vessel', val: '13_17_VesselType_NotPowered' },
+                        ]
+
+                        //text += temp.filter(i => v[i.val] && +v[i.val] > 0).map(i => `${i.name}:${v[i.val]}`).join("<br>")
+                        text += temp.filter(i => i.name === 'Area Name' || (Number(v[i.val]) && v[i.val] > 0)).map(i => `${i.name}: ${v[i.val]}${i.suf}`).join("<br>")
+                        /*
                         text += `
                                 Area Name: ${v['AREA_NAME']}<br>
                                 Total Incidents:  ${v['13_17_TotalIncident ']}<br>
@@ -385,6 +428,7 @@
                                 Powered Vessel:   ${v['13_17_VesselType_Powered']}<br>
                                 Unpowered Vessel:   ${v['13_17_VesselType_NotPowered']}<br>
                              `
+                            */
                     }
 
                     if (v['13_17_TotalIncident '] && +v['13_17_TotalIncident '] < 5) {
@@ -419,6 +463,14 @@
         });
 
         // After the last frame rendered before the map enters an "idle" state.
+
+        /*
+        map.getStyle().layers.filter(i => i['source-layer'] === 'se-can-sub-boat').forEach(i => {
+            map.setLayoutProperty(i.id, 'visibility', 'visible');
+        })
+        */
+
+
 
         const menuLayers = [
             { name: 'Total Incidents 2009 - 2012', layer: '09_12_TotalIncident_Sub' },
