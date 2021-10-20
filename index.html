@@ -386,12 +386,10 @@
             Unpowered Vessel:   ${v['13_17_VesselType_NotPowered']}<br>
             `
                     }
+
                     if (pref === 'se_ax_6_SITE') {
-                        text += `
-            Site name:   ${v['site_name']}<br>
-            `
-                        //Se product name:   ${v['se_product']}<br>
-                        //se_account:   ${v['se_account']}<br>
+                        //text += `Site name:${v['site_name']}<br>`
+                        return;
                     }
 
 
