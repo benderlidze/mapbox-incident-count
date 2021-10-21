@@ -222,13 +222,13 @@
     <script>
 
         const myDropdown = document.getElementById("myDropdown");
-        const sources = ['se-can-sub-boat', "se-ca-pro-boat", "secanada_facility-3csvgi"]
+        const sources = ['se-ca-pro-boat', "se-ca-pro-boat", "secanada_facility-3csvgi"]
         const allowedLayers = [
-            '09_12_TotalIncident_Sub',
+            '9_12_Total_Incident_PRO',
             '13_17_TotalIncident_Sub',
             'Percentage_ChangeBetween_09-12_and_13-17_Sub',
             'se_ax_6_SITE',
-            'se-can-sub-boat',
+            'se-ca-pro-boat',
             'cp_label_SUB',
         ]
         const infoDiv = document.getElementById("info")
@@ -273,8 +273,8 @@
         map.on('load', () => {
 
 
-            map.setPaintProperty('se-can-sub-boat', 'fill-outline-color', "black")
-            map.setPaintProperty('se-can-sub-boat', 'fill-color', "rgba(255, 255, 0, 0.1)")
+            map.setPaintProperty('se-ca-pro-boat', 'fill-outline-color', "black")
+            map.setPaintProperty('se-ca-pro-boat', 'fill-color', "rgba(255, 255, 0, 0.1)")
             map.on('mousemove', layerDisplay)
             map.on('click', layerDisplay)
 
@@ -312,7 +312,7 @@
 
 
                 const layerName = features.find(i =>
-                    i.layer.id === '09_12_TotalIncident_Sub' ||
+                    i.layer.id === '9_12_Total_Incident_PRO' ||
                     i.layer.id === '13_17_TotalIncident_Sub' ||
                     i.layer.id === 'se_ax_6_SITE' ||
                     i.layer.id === 'Percentage_ChangeBetween_09-12_and_13-17_Sub'
@@ -327,7 +327,7 @@
                     if (layerName && layerName.layer.id) {
                         pref = layerName.layer.id;
                         console.log('pref', pref);
-                        if (pref === '09_12_TotalIncident_Sub') pref = '09_12_';
+                        if (pref === '9_12_Total_Incident_PRO') pref = '09_12_';
                         if (pref === '13_17_TotalIncident_Sub') pref = '13_17_';
                         if (pref === 'se_ax_6_SITE') pref = 'se_ax_6_SITE';
                         if (pref === 'Percentage_ChangeBetween_09-12_and_13-17_Sub') pref = 'Percentage_ChangeBetween_09-12_and_13-17_Sub';
@@ -346,24 +346,27 @@
                     //info.innerHTML = `<div class="box">${text}</div>`;
 
                     const v = displayFeatures[0].properties;
-                    console.log('v', v);
+                    // console.log('v', v);
                     if (pref === '09_12_') {
+
                         const temp = [
                             { suf: "", name: 'Area Name', val: 'AREA_NAME' },
-                            { suf: "", name: 'Total Incidents', val: '09_12_TotalIncident' },
-                            { suf: "%", name: 'Number of Males', val: '09_12_MaleCount' },
-                            { suf: "%", name: 'Number of Females', val: '09_12_FemaleCount' },
-                            { suf: "%", name: 'Accompaniment (Alone)', val: '09_12_Accompaniment_AloneOrNotWitness' },
-                            { suf: "%", name: 'Accompaniment (Adult)', val: '09_12_Accompaniment_WithAdult' },
-                            { suf: "%", name: 'Accompaniment (Minor)', val: '09_12_Accompaniment_WithMinorOnly' },
-                            { suf: "%", name: 'Accompaniment (Other)', val: '09_12_Accompaniment_Other' },
-                            { suf: "%", name: 'Alcohol Involved', val: '09_12_AlcoholReadingRecorded' },
-                            { suf: "%", name: 'Drug Involved', val: '09_12  _DrugsInvolved' },
-                            { suf: "%", name: 'PFD (Worn)', val: '09_12_PFDWornProperly' },
-                            { suf: "%", name: 'PFD (Improperly Worn)', val: '09_12_PFDImproperlyWorn' },
-                            { suf: "%", name: 'PDF (Not Worn)', val: '09_12_PFDNotWorn' },
-                            { suf: "%", name: 'Powered Vessel', val: '09_12_VesselTypePowered' },
-                            { suf: "%", name: 'Unpowered Vessel', val: '09_12_VesselTypeNotPowered' },
+                            { suf: "", name: 'Total Incidents', val: '9_12_Total_Incident' },
+                            { suf: "%", name: 'Number of Males', val: 'Male_Count' },
+                            { suf: "%", name: 'Number of Females', val: 'Female_Count' },
+                            { suf: "%", name: 'Accompaniment (Alone)', val: 'Accompaniment_AloneOrNotWitness' },
+                            { suf: "%", name: 'Accompaniment (Adult)', val: 'Accompaniment_WithAdult' },
+                            { suf: "%", name: 'Accompaniment (Minor)', val: 'Accompaniment_WithMinorOnly' },
+                            { suf: "%", name: 'Accompaniment (Other)', val: 'Accompaniment_Other' },
+                            { suf: "%", name: 'Alcohol Involved', val: 'Alcohol_Reading_Recorded' },
+                            { suf: "%", name: 'Drug Involved', val: 'Drugs_Involved' },
+                            { suf: "%", name: 'PFD (Worn)', val: 'PFD_Worn_Properly' },
+                            { suf: "%", name: 'PFD (Improperly Worn)', val: 'PFD_Improperly_Worn' },
+                            { suf: "%", name: 'PDF (Not Worn)', val: 'PFD_Not_Worn' },
+                            { suf: "%", name: 'Powered Vessel', val: 'VesselTypePowered' },
+                            { suf: "%", name: 'Unpowered Vessel', val: 'VesselTypeNotPowered' },
+                            { suf: "%", name: 'Drug Status Unknown', val: 'Drug_Status_Unknown' },
+                            { suf: "%", name: 'No Drugs', val: 'No_Drugs' },
                         ];
                         /*
                         text += `
@@ -390,21 +393,21 @@
                     if (pref === '13_17_') {
 
                         const temp = [
-                            {suf:"", name: 'Area Name', val: 'AREA_NAME' },
-                            {suf:"", name: 'Total Incidents', val: '13_17_TotalIncident ' },
-                            {suf:"%", name: 'Number of Males', val: '13_17_MaleCount' },
-                            {suf:"%", name: 'Number of Females', val: '13_17_FemaleCount' },
-                            {suf:"%", name: 'Accompaniment (Alone):', val: '13_17_Accompaniment_AloneOrNotWitness' },
-                            {suf:"%", name: 'Accompaniment (Adult):', val: '13_17_Accompaniment_WithAdult' },
-                            {suf:"%", name: 'Accompaniment (Minor):', val: '13_17_Accompaniment_WithMinorOnly' },
-                            {suf:"%", name: 'Accompaniment (Other):', val: '13_17_Accompaniment_Other' },
-                            {suf:"%", name: 'Alcohol Involved', val: '13_17_AlcoholReadingRecorded' },
-                            {suf:"%", name: 'Drug Involved', val: '9_12 _DrugsInvolved' },
-                            {suf:"%", name: 'PFD (Worn)', val: '13_17_PFDWornProperly' },
-                            {suf:"%", name: 'PFD (Improperly Worn)', val: '13_17_PFDImproperlyWorn' },
-                            {suf:"%", name: 'PDF (Not Worn)', val: '13_17_PFDNotWorn' },
-                            {suf:"%", name: 'Powered Vessel', val: '13_17_VesselType_Powered' },
-                            {suf:"%", name: 'Unpowered Vessel', val: '13_17_VesselType_NotPowered' },
+                            { suf: "", name: 'Area Name', val: 'AREA_NAME' },
+                            { suf: "", name: 'Total Incidents', val: '13_17_TotalIncident ' },
+                            { suf: "%", name: 'Number of Males', val: '13_17_MaleCount' },
+                            { suf: "%", name: 'Number of Females', val: '13_17_FemaleCount' },
+                            { suf: "%", name: 'Accompaniment (Alone):', val: '13_17_Accompaniment_AloneOrNotWitness' },
+                            { suf: "%", name: 'Accompaniment (Adult):', val: '13_17_Accompaniment_WithAdult' },
+                            { suf: "%", name: 'Accompaniment (Minor):', val: '13_17_Accompaniment_WithMinorOnly' },
+                            { suf: "%", name: 'Accompaniment (Other):', val: '13_17_Accompaniment_Other' },
+                            { suf: "%", name: 'Alcohol Involved', val: '13_17_AlcoholReadingRecorded' },
+                            { suf: "%", name: 'Drug Involved', val: '9_12 _DrugsInvolved' },
+                            { suf: "%", name: 'PFD (Worn)', val: '13_17_PFDWornProperly' },
+                            { suf: "%", name: 'PFD (Improperly Worn)', val: '13_17_PFDImproperlyWorn' },
+                            { suf: "%", name: 'PDF (Not Worn)', val: '13_17_PFDNotWorn' },
+                            { suf: "%", name: 'Powered Vessel', val: '13_17_VesselType_Powered' },
+                            { suf: "%", name: 'Unpowered Vessel', val: '13_17_VesselType_NotPowered' },
                         ]
 
                         //text += temp.filter(i => v[i.val] && +v[i.val] > 0).map(i => `${i.name}:${v[i.val]}`).join("<br>")
@@ -465,7 +468,7 @@
         // After the last frame rendered before the map enters an "idle" state.
 
         /*
-        map.getStyle().layers.filter(i => i['source-layer'] === 'se-can-sub-boat').forEach(i => {
+        map.getStyle().layers.filter(i => i['source-layer'] === 'se-ca-pro-boat').forEach(i => {
             map.setLayoutProperty(i.id, 'visibility', 'visible');
         })
         */
@@ -473,11 +476,11 @@
 
 
         const menuLayers = [
-            { name: 'Total Incidents 2009 - 2017', layer: '09_12_TotalIncident_Sub' },
+            { name: 'Total Incidents 2009 - 2017', layer: '9_12_Total_Incident_PRO' },
             // { name: 'Total Incidents 2013 - 2017', layer: '13_17_TotalIncident_Sub' },
             { name: '% change between 2019/2012 and 2013/2017', layer: 'Percentage_ChangeBetween_09-12_and_13-17_Sub' },
             { name: 'Incident Locations', layer: 'se_ax_6_SITE' },
-            { name: 'Area Boundaries (District)', layer: 'se-can-sub-boat' },
+            { name: 'Area Boundaries (District)', layer: 'se-ca-pro-boat' },
             { name: 'Area Labels (District)', layer: 'cp_label_SUB' },
         ]
 
