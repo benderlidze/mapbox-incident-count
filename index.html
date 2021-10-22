@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DPRC and Lifesaving Society Risk of Drowning (boating incidents)</title>
+    <title>Recreational Boating-Related Fatalities in Canada, 2008–2017</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
@@ -198,7 +198,71 @@
                 top: 130px;
             }
         }
+
+        .legend {
+            background-color: #fff;
+            border-radius: 3px;
+            bottom: 30px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            padding: 10px;
+            position: absolute;
+            /* right: 10px; */
+            z-index: 1;
+            left: 10px
+        }
+
+        .legend h4 {
+            margin: 0 0 10px;
+        }
+
+        .legend div span {
+            /* display: inline-block;
+            height: 10px;
+            margin-right: 5px;
+            width: 60px; */
+        }
+
+        .bar {
+            display: inline-block;
+            height: 10px;
+            margin-right: 5px;
+            width: 100%;
+        }
+
+        #legend {
+            display: flex;
+        }
+
+        #legend>div {
+            width: 70px;
+        }
     </style>
+
+    <div id="state-legend" class="legend">
+        <h4>Total incidents</h4>
+        <div id="legend">
+
+            <div>
+                <div class="bar" style="background-color: rgba(251,220,134,1)"></div>
+                <div>1</div>
+            </div>
+            <div>
+                <div class="bar" style="background-color: rgba(247,158,84,1)"></div>
+                <div>150</div>
+            </div>
+            <div>
+                <div class="bar" style="background-color: rgba(244,121,53,1)"></div>
+                <div>220</div>
+            </div>
+
+            <div>
+                <div class="bar" style="background-color: rgba(240,56,0,1)"></div>
+                <div>300</div>
+            </div>
+
+        </div>
+    </div>
 
     <div id="info">DPRC and Lifesaving Society Risk of Drowning (boating incidents)</div>
     <nav id="menu"></nav>
@@ -221,6 +285,7 @@
 
     <script>
 
+        const legend = document.getElementById("legend");
         const myDropdown = document.getElementById("myDropdown");
         const sources = ['se-ca-pro-boat', "se-ca-pro-boat", "secanada_facility-3csvgi"]
         const allowedLayers = [
@@ -276,10 +341,35 @@
             map.setPaintProperty('se-ca-pro-boat', 'fill-outline-color', "black")
             map.setPaintProperty('se-ca-pro-boat', 'fill-color', "rgba(255, 255, 0, 0.1)")
             map.on('mousemove', layerDisplay)
-            map.on('click', layerDisplay)
+            map.on('click', (e) => {
+                const features = map.queryRenderedFeatures(e.point);
+                console.log('features', features);
+
+                console.log('features[0].layer.paint["fill-color"]', features[0].layer.paint["fill-opacity"]);
+                console.log('features[0].layer.paint["fill-color"]', features[0].layer.paint["fill-color"].toString(),);
+
+                /* LEGEND GENERATE
+                const props = map.queryRenderedFeatures({ layers: ['9_12_Total_Incident_PRO'] });
+                //const unique = [...new Set(props.map(i => [i.id, i])).values()];
+                const unique = [...new Map(props.map(i => [i.id, i])).values()];
+                console.log('unique', unique);
+
+                const colors = unique.map(i => {
+                    return { number: i.properties['9_12_Total_Incident'], color: i.layer.paint }
+                }).sort((a, b) => b.number - a.number)
+                console.log('colos', colors);
+
+                const div = colors.map(i => (`
+                    <div><span style="background-color: ${i.color['fill-color'].toString()}"></span>${i.number}</div>
+                `)).join("")
+                console.log('div', div);
+                legend.innerHTML = div;
+                */
+            })
 
 
             function layerDisplay(e) {
+
 
 
                 if (popup) {
@@ -287,6 +377,7 @@
                 }
 
                 const features = map.queryRenderedFeatures(e.point);
+
                 // Limit the number of properties we're displaying for
                 // legibility and performance
                 const displayProperties = [
@@ -349,6 +440,7 @@
                     // console.log('v', v);
                     if (pref === '09_12_') {
 
+
                         const temp = [
                             { suf: "", name: 'Area Name', val: 'AREA_NAME' },
                             { suf: "", name: 'Total Incidents', val: '9_12_Total_Incident' },
@@ -378,7 +470,7 @@
                                     Accompaniment (Adult):   ${v['09_12_Accompaniment_WithAdult']}<br>
                                     Accompaniment (Minor):   ${v['09_12_Accompaniment_WithMinorOnly']}<br>
                                     Accompaniment (Other):   ${v['09_12_Accompaniment_Other']}<br>
-
+     
                                     Alcohol Involved:   ${v['09_12_AlcoholReadingRecorded']}<br>
                                     Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
                                     PFD (Worn):   ${v['09_12_PFDWornProperly']}<br>
@@ -422,7 +514,7 @@
                                 Accompaniment (Adult):   ${v['13_17_Accompaniment_WithAdult']}<br>
                                 Accompaniment (Minor):   ${v['13_17_Accompaniment_WithMinorOnly']}<br>
                                 Accompaniment (Other):   ${v['13_17_Accompaniment_Other']}<br>
-
+     
                                 Alcohol Involved:   ${v['13_17_AlcoholReadingRecorded']}<br>
                                 Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
                                 PFD (Worn):   ${v['13_17_PFDWornProperly']}<br>
