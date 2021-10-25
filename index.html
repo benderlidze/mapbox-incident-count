@@ -237,6 +237,10 @@
         #legend>div {
             width: 70px;
         }
+
+        #state-legend {
+            display: none;
+        }
     </style>
 
     <div id="state-legend" class="legend">
@@ -264,7 +268,7 @@
         </div>
     </div>
 
-    <div id="info">DPRC and Lifesaving Society Risk of Drowning (boating incidents)</div>
+    <div id="info">Recreational Boating-Related Fatalities in Canada, 2008–2017</div>
     <nav id="menu"></nav>
     <div id="map"></div>
 
@@ -285,6 +289,7 @@
 
     <script>
 
+        const mainLegend = document.getElementById("state-legend");
         const legend = document.getElementById("legend");
         const myDropdown = document.getElementById("myDropdown");
         const sources = ['se-ca-pro-boat', "se-ca-pro-boat", "secanada_facility-3csvgi"]
@@ -602,6 +607,15 @@
                 // Show or hide layer when the toggle is clicked.
                 link.onclick = function (e) {
                     const clickedLayer = this.id;
+
+                    console.log('clickedLayer', clickedLayer);
+                    if (map.getLayer("9_12_Total_Incident_PRO").visibility === "visible") {
+                        mainLegend.style.display = "none"
+                    } else {
+                        mainLegend.style.display = "inline"
+                    }
+
+
                     e.preventDefault();
                     e.stopPropagation();
                     const visibility = map.getLayoutProperty(
@@ -634,6 +648,8 @@
                 // Show or hide layer when the toggle is clicked.
                 link1.onclick = function (e) {
                     const clickedLayer = this.id;
+
+                    console.log('clickedLayer', clickedLayer);
                     e.preventDefault();
                     e.stopPropagation();
                     const visibility = map.getLayoutProperty(
