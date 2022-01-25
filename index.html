@@ -35,7 +35,7 @@
             background: #522989;
             position: absolute;
             z-index: 1;
-            top: 60px;
+            top: 70px;
             right: 10px;
             border-radius: 3px;
             width: 320px;
@@ -79,10 +79,12 @@
             top: 20px;
             right: 20px;
             z-index: 1000;
-            /* background-color: white; */
+            background-color: #522989;
             padding: 10px;
             font-size: large;
             text-transform: uppercase;
+            color: white;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .box {
@@ -96,7 +98,7 @@
 
         .logo {
             position: absolute;
-            bottom: 10px;
+            bottom: 15px;
             right: 10px;
             z-index: 1000;
             text-align: end;
@@ -283,8 +285,7 @@
 
     <div class="powered">Powered by</div>
     <div class="logo">
-        <img src="images/20210805-DPRC.jpg" alt="" style="width: 250px;"><br>
-        <img src="images/AX logo.png" alt="" style="width:250px;">
+        <img src="images/LSO Logo.png" alt="" style="width:250px;">
     </div>
 
     <script>
@@ -342,7 +343,7 @@
         // Wait until the map has finished loading.
         map.on('load', () => {
 
-
+            map.setPaintProperty("cp_label_PRO", 'text-color', 'black')
             map.setPaintProperty('se-ca-pro-boat', 'fill-outline-color', "black")
             map.setPaintProperty('se-ca-pro-boat', 'fill-color', "rgba(255, 255, 0, 0.1)")
             map.on('mousemove', layerDisplay)
