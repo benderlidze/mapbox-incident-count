@@ -35,7 +35,7 @@
             background: #522989;
             position: absolute;
             z-index: 1;
-            top: 70px;
+            top: 100px;
             right: 10px;
             border-radius: 3px;
             width: 320px;
@@ -270,7 +270,8 @@
         </div>
     </div>
 
-    <div id="info">Recreational Boating-Related Fatalities in Canada, 2008–2017</div>
+    <div id="info">RECREATIONAL BOATING-RELATED FATALITIES IN CANADA, 2008-2017<br>
+        DÉCÈS ASSOCIÉS À LA NAVIGATION DE PLAISANCE AU CANADA DE 2008 À 2017</div>
     <nav id="menu"></nav>
     <div id="map"></div>
 
@@ -552,6 +553,8 @@
                         text += `Percentage Change: ${p}%<br>`;
                     }
 
+                    text = text.replace("Area Name:", "Name/Nom:")
+
                     if (pref) {
                         popup = new mapboxgl.Popup()
                             .setLngLat(e.lngLat)
@@ -572,12 +575,12 @@
         */
 
         const menuLayers = [
-            { name: 'Total Incidents 2009 - 2017', layer: '9_12_Total_Incident_PRO' },
+            { name: 'TOTAL INCIDENTS/TOTAL DES INCIDENTS', layer: '9_12_Total_Incident_PRO' },
             // { name: 'Total Incidents 2013 - 2017', layer: '13_17_TotalIncident_Sub' },
             // { name: '% change between 2019/2012 and 2013/2017', layer: 'Percentage_ChangeBetween_09-12_and_13-17_Sub' },
-            { name: 'Incident Locations', layer: 'se_ax_6_SITE' },
-            { name: 'Area Boundaries (Province)', layer: 'se-ca-pro-boat' },
-            { name: 'Area Labels (Province)', layer: 'cp_label_PRO' },
+            { name: 'INCIDENT LOCATIONS/LIEUX DES INCIDENTS', layer: 'se_ax_6_SITE' },
+            { name: 'AREA BOUNDARIES/LIMITES FRONTALIÈRES', layer: 'se-ca-pro-boat' },
+            { name: 'PROVINCES-TERRITORIES/TERRITOIRES', layer: 'cp_label_PRO' },
         ]
 
         map.once('idle', () => {
