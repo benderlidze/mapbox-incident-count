@@ -405,9 +405,15 @@
                         return displayFeat;
                     });
 
+                /*
+            { name: 'TOTAL INCIDENTS/TOTAL DES INCIDENTS', layer: 'Total_incidents/total_des_incidents:_PRO' },
+            { name: 'INCIDENT LOCATIONS/LIEUX DES INCIDENTS', layer: 'se_ax_6_SITE' },
+            { name: 'AREA BOUNDARIES/LIMITES FRONTALIÈRES', layer: 'se-ca-pro-boat' },
+            { name: 'PROVINCES-TERRITORIES/TERRITOIRES', layer: 'cp_label_PRO' },
+*/
 
                 const layerName = features.find(i =>
-                    i.layer.id === '9_12_Total_Incident_PRO' ||
+                    i.layer.id === 'Total_incidents/total_des_incidents:_PRO' ||
                     i.layer.id === '13_17_TotalIncident_Sub' ||
                     i.layer.id === 'se_ax_6_SITE' ||
                     i.layer.id === 'Percentage_ChangeBetween_09-12_and_13-17_Sub'
@@ -422,7 +428,7 @@
                     if (layerName && layerName.layer.id) {
                         pref = layerName.layer.id;
                         console.log('pref', pref);
-                        if (pref === '9_12_Total_Incident_PRO') pref = '09_12_';
+                        if (pref === 'Total_incidents/total_des_incidents:_PRO') pref = '09_12_';
                         if (pref === '13_17_TotalIncident_Sub') pref = '13_17_';
                         if (pref === 'se_ax_6_SITE') pref = 'se_ax_6_SITE';
                         if (pref === 'Percentage_ChangeBetween_09-12_and_13-17_Sub') pref = 'Percentage_ChangeBetween_09-12_and_13-17_Sub';
@@ -441,28 +447,28 @@
                     //info.innerHTML = `<div class="box">${text}</div>`;
 
                     const v = displayFeatures[0].properties;
-                    // console.log('v', v);
+                    //console.log('v', v);
                     if (pref === '09_12_') {
 
 
                         const temp = [
                             { suf: "", name: 'Area Name', val: 'AREA_NAME' },
-                            { suf: "", name: 'Total Incidents', val: '9_12_Total_Incident' },
-                            { suf: "%", name: 'Number of Males', val: 'Male_Count' },
-                            { suf: "%", name: 'Number of Females', val: 'Female_Count' },
-                            { suf: "%", name: 'Accompaniment (Alone)', val: 'Accompaniment_AloneOrNotWitness' },
-                            { suf: "%", name: 'Accompaniment (Adult)', val: 'Accompaniment_WithAdult' },
-                            { suf: "%", name: 'Accompaniment (Minor)', val: 'Accompaniment_WithMinorOnly' },
-                            { suf: "%", name: 'Accompaniment (Other)', val: 'Accompaniment_Other' },
-                            { suf: "%", name: 'Alcohol Involved', val: 'Alcohol_Reading_Recorded' },
-                            { suf: "%", name: 'Drug Involved', val: 'Drugs_Involved' },
-                            { suf: "%", name: 'PFD (Worn)', val: 'PFD_Worn_Properly' },
-                            { suf: "%", name: 'PFD (Improperly Worn)', val: 'PFD_Improperly_Worn' },
-                            { suf: "%", name: 'PDF (Not Worn)', val: 'PFD_Not_Worn' },
-                            { suf: "%", name: 'Powered Vessel', val: 'VesselTypePowered' },
-                            { suf: "%", name: 'Unpowered Vessel', val: 'VesselTypeNotPowered' },
-                            { suf: "%", name: 'Drug Status Unknown', val: 'Drug_Status_Unknown' },
-                            { suf: "%", name: 'No Drugs', val: 'No_Drugs' },
+                            { suf: "", name: 'Total Incidents', val: 'Total_incidents/total_des_incidents:' },
+                            { suf: "%", name: 'Number of Males', val: 'Number_of_males/nombre_des_hommes:' },
+                            { suf: "%", name: 'Number of Females', val: 'Number_of_females/nombre_des_femmes:' },
+                            { suf: "%", name: 'Accompaniment (Alone)', val: 'Accompaniment_(Alone)/navigation_en_solo:' },
+                            { suf: "%", name: 'Accompaniment (Adult)', val: 'Accompaniment_(Adult)/navigation_avec_au_moinsun_adulte:' },
+                            { suf: "%", name: 'Accompaniment (Minor)', val: 'Accompaniment_(Minor)/navigation_avec_des_mineurs:' },
+                            { suf: "%", name: 'Accompaniment (Other)', val: 'Accompaniment_(Other)/navigation_avec_d’autres:' },
+                            { suf: "%", name: 'Alcohol Involved', val: 'Alcohol_Involved/présence_de_l’alcool:' },
+                            { suf: "%", name: 'Drug Involved', val: 'Drug_Involved/présence_de_drogues:' },
+                            { suf: "%", name: 'PFD (Worn)', val: 'PFD_(Worn)/VFI_porté_adéquatement:' },
+                            { suf: "%", name: 'PFD (Improperly Worn)', val: 'PFD_(Improperly_Worn)/VFI_porté_inadéquatement:' },
+                            { suf: "%", name: 'PDF (Not Worn)', val: 'PFD_(Not_Worn)/VFI_non_porté:' },
+                            { suf: "%", name: 'Powered Vessel', val: 'Powered_Vessel/bateau_à_moteur:' },
+                            { suf: "%", name: 'Unpowered Vessel', val: 'Unpowered_Vessel/bateau_non_motorisé:' },
+                            { suf: "%", name: 'Drug Status Unknown', val: 'Drug_Status_Unknown/présence_de_drogue_inconnue:' },
+                            { suf: "%", name: 'No Drugs', val: 'No_Drugs/pas_de_drogues:' },
                         ];
                         /*
                         text += `
