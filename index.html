@@ -243,6 +243,10 @@
         #state-legend {
             display: none;
         }
+
+        .custom-popup {
+            min-width: 400px;
+        }
     </style>
 
     <div id="state-legend" class="legend">
@@ -578,8 +582,9 @@
 
                     text = text.replace("Area Name:", "Name/Nom:")
 
+
                     if (pref) {
-                        popup = new mapboxgl.Popup()
+                        popup = new mapboxgl.Popup({ className: "custom-popup" })
                             .setLngLat(e.lngLat)
                             .setHTML(text)
                             .addTo(map);
