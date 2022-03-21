@@ -451,7 +451,7 @@
                     //info.innerHTML = `<div class="box">${text}</div>`;
 
                     const v = displayFeatures[0].properties;
-                    console.log('v', v);
+                    console.log('v', v, displayFeatures);
                     if (pref === '09_12_') {
 
 
@@ -514,7 +514,11 @@
                                     Unpowered Vessel:   ${v['09_12_VesselTypeNotPowered']}<br>
                                 `
                                 */
-                        text += temp.filter(i => i.name === 'Area Name' || (Number(v[i.val]) && v[i.val] > 0)).map(i => `${i.name}: ${v[i.val]}${i.suf}`).join("<br>")
+                        text += temp
+                            //.filter(i => i.name === 'Area Name' || (Number(v[i.val]) && v[i.val] > 0))
+                            .filter(i => i.name === 'Area Name' || v[i.val] !== 0)
+                            .map(i => `${i.name}: ${v[i.val]}${i.suf}`)
+                            .join("<br>")
                     }
                     if (pref === '13_17_') {
 
@@ -548,7 +552,7 @@
                                 Accompaniment (Adult):   ${v['13_17_Accompaniment_WithAdult']}<br>
                                 Accompaniment (Minor):   ${v['13_17_Accompaniment_WithMinorOnly']}<br>
                                 Accompaniment (Other):   ${v['13_17_Accompaniment_Other']}<br>
-     
+             
                                 Alcohol Involved:   ${v['13_17_AlcoholReadingRecorded']}<br>
                                 Drug Involved:   ${v['09_12 _DrugsInvolved']}<br>
                                 PFD (Worn):   ${v['13_17_PFDWornProperly']}<br>
